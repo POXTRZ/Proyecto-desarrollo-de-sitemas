@@ -9,7 +9,7 @@ body {
     text-align: center;
 }
 
-/* Pantalla de carga */
+
 #pantalla-carga {
     position: fixed;
     top: 0;
@@ -47,7 +47,7 @@ body {
     display: none !important;
 }
 
-/* Estilo del puntaje */
+
 .Score {
     font-weight: bold;
     font-size: 24px;
@@ -58,7 +58,7 @@ body {
     display: inline-block;
 }
 
-/* Campo de juego */
+
 .juego {
     width: 90%;
     max-width: 600px;
@@ -71,7 +71,7 @@ body {
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Imágenes dentro del juego */
+
 .imagen {
     position: absolute;
     width: 50px;
@@ -84,12 +84,12 @@ body {
     transform: scale(1.2);
 }
 
-/* Controles */
+
 .controls {
     margin-top: 20px;
 }
 
-/* Cuenta regresiva */
+
 #countdown {
     margin-top: 10px;
     font-weight: bold;
@@ -97,7 +97,7 @@ body {
     color: #ffcc00;
 }
 
-/* Listas de puntuaciones */
+
 .score-lists {
     display: flex;
     justify-content: space-around;
@@ -131,7 +131,7 @@ body {
     font-size: 18px;
 }
 
-/* Botón de inicio */
+
 #start-button {
     background: linear-gradient(45deg, #ff416c, #ff4b2b);
     color: white;
@@ -154,7 +154,7 @@ body {
     transform: scale(0.98);
 }
 
-/* Diseño responsivo */
+
 @media (max-width: 768px) {
     .score-lists {
         flex-direction: column;

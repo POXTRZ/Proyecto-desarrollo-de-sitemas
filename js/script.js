@@ -42,21 +42,24 @@ function Generadordeimagenes() {
     for (let i = 0; i < numImages; i++) {
         const img = document.createElement("img");
         const esTrue = Math.random() <= 0.7;
-
+        
+        
         img.src = esTrue ? imgtrue : imgfalse;
         img.classList.add("imagen");
-
+        
+        img.dataset.esTrue = esTrue; 
+        
         const maxX = juego.offsetWidth - 50;
         const maxY = juego.offsetHeight - 50;
         const randomX = Math.random() * maxX;
         const randomY = Math.random() * maxY;
-
+        
         img.style.left = randomX + "px";
         img.style.top = randomY + "px";
-
+        
         img.addEventListener("click", () => {
             if (gameActive) {
-                if (esTrue) {
+                if (img.dataset.esTrue === "true") {
                     score++;
                     soundSuccess.play();
                 } else {
@@ -68,9 +71,9 @@ function Generadordeimagenes() {
             img.classList.add("clicked"); 
             setTimeout(() => img.remove(), 300);
         });
-
+        
         juego.appendChild(img);
-
+        
         setTimeout(() => {
             if (!img.classList.contains("clicked")) {
                 img.classList.add("fading");
@@ -80,6 +83,7 @@ function Generadordeimagenes() {
     }
     setTimeout(Generadordeimagenes, spawnInterval);
 }
+
 
 function AjustarDificultad() {
     if (timeLeft % 10 === 0) {
@@ -91,15 +95,17 @@ function AjustarDificultad() {
 function CambiarImagenesBuenasAMalas() {
     setInterval(() => {
         if (!gameActive) return;
-
+        
         const imagenes = document.querySelectorAll("#juego img");
         imagenes.forEach(img => {
-            if (img.src.includes(imgtrue)) {
+            if (img.dataset.esTrue === "true") {
                 img.src = imgfalse;
+                img.dataset.esTrue = "false";
             }
         });
     }, 1600);
 }
+
 
 function saveScoreToLocalStorage(score) {
     let storedScores = localStorage.getItem("scores");
@@ -112,9 +118,19 @@ function displayScores() {
     let storedScores = localStorage.getItem("scores");
     if (!storedScores) return;
     let arrayScores = JSON.parse(storedScores);
-    bestScoresList.innerHTML = arrayScores.sort((a, b) => b - a).slice(0, 3).map((s, i) => `<li>${i + 1}. ${s}</li>`).join('');
-    lastScoresList.innerHTML = arrayScores.slice(-5).map((s, i) => `<li>#${arrayScores.length - 5 + (i + 1)}: ${s}</li>`).join('');
+
+    // Corrige el uso de template literals
+    const bestScores = [...arrayScores].sort((a, b) => b - a).slice(0, 3);
+    bestScoresList.innerHTML = bestScores
+        .map((s, i) => `<li>${i + 1}. ${s}</li>`)
+        .join('');
+
+    const lastScores = arrayScores.slice(-5);
+    lastScoresList.innerHTML = lastScores
+        .map((s, i) => `<li>#${arrayScores.length - lastScores.length + i + 1}: ${s}</li>`)
+        .join('');
 }
+
 
 startButton.addEventListener("click", () => {
     backgroundMusic.pause();
